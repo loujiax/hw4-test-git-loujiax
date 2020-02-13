@@ -1,3 +1,10 @@
+
+#########################################
+##### Name: Jiaxin Lou              #####
+##### Uniqname: loujiax             #####
+#########################################
+
+
 import unittest
 import hw4_cards as cards
 
@@ -17,9 +24,52 @@ class TestCard(unittest.TestCase):
 
     # Add methods below to test main assignments. 
     def test_1_queen(self):
-        pass
-
-
+        card = cards.Card(rank=12)
+        self.assertEqual(card.rank_name, "Queen")
+        
+    def test_2_clubs(self):
+        card = cards.Card(suit=1)
+        self.assertEqual(card.suit_name, "Clubs")
+        
+    def test_3_str(self):
+        card = cards.Card(3,13)
+        self.assertEqual(card.__str__(), "King of Spades")
+        
+    def test_4_deck(self):
+        deck = cards.Deck()
+        self.assertEqual(len(deck.cards), 52)
+        
+    def test_5_deal(self):
+        deck = cards.Deck()
+        cardinstance = []
+        for i in deck.cards:
+            cardinstance.append(i.__str__())
+        self.assertTrue(str(deck.deal_card()) in cardinstance)
+        
+    def test_6_deal_fewer(self):
+        deck = cards.Deck()
+        old_len = len(deck.cards)
+        deck.deal_card()
+        new_len = len(deck.cards)
+        self.assertEqual(old_len-1, new_len)
+        
+    def test_7_replace_more(self):
+        deck = cards.Deck()
+        the_card = deck.deal_card()
+        old_len = len(deck.cards)
+        deck.replace_card(the_card)
+        new_len = len(deck.cards)
+        self.assertEqual(old_len+1, new_len)
+        
+    def test_8_replace_not_affected(self):
+        deck = cards.Deck()
+        the_card = deck.deal_card() # remove a card
+        deck.replace_card(the_card) # insert the card
+        old_len = len(deck.cards)  #count the card number
+        deck.replace_card(the_card) # insert the card again
+        new_len = len(deck.cards) # count the card number after replace_card
+        self.assertEqual(old_len, new_len)
+        
 
 ############
 ### The following is a line to run all of the tests you include:
